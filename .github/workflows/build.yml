@@ -61,7 +61,7 @@ jobs:
         with:
            name: xiaomi-pipa-none
            path: out/*.img*
-           retention-days: 7
+           retention-days: 30
 
       - name: Build the xiaomi-pipa with KDE Plasma Desktop
         run: |
@@ -85,8 +85,32 @@ jobs:
         with:
            name: xiaomi-pipa-plasma
            path: out/*.img*
-           retention-days: 7
+           retention-days: 30
             
+      - name: Build the xiaomi-pipa with KDE Plasma Desktop with fde
+        run: |
+           yes | pmbootstrap zap
+           rm -r out/*
+           pmbootstrap install --password 147147 --add postmarketos-ui-plasma-desktop --fde
+           cat /home/runner/.local/var/pmbootstrap/log.txt
+           pmbootstrap export
+           cp /tmp/postmarketOS-export/boot.img out/boot-xiaomi-pipa.img
+           cp /tmp/postmarketOS-export/xiaomi-pipa.img out/rootfs-xiaomi-pipa-plasma.img
+
+      - name: Breakpoint if tests failed for xiaomi-pipa with KDE Plasma Desktop
+        if: failure()
+        uses: namespacelabs/breakpoint-action@v0
+        with:
+          duration: 30m
+          authorized-users: nixxizlab
+      
+      - name: Upload artifacts xiaomi-pipa with KDE Plasma Desktop
+        uses: actions/upload-artifact@v4
+        with:
+           name: xiaomi-pipa-plasma-fde
+           path: out/*.img*
+           retention-days: 30
+
       - name: Build the xiaomi-pipa with GNOME
         run: |
            yes | pmbootstrap zap
@@ -108,7 +132,7 @@ jobs:
         with:
            name: xiaomi-pipa-gnome
            path: out/*.img*
-           retention-days: 7
+           retention-days: 30
            
       - name: Copy xiaomi-pipa kernel
         run: |
@@ -120,7 +144,7 @@ jobs:
         with:
            name: xiaomi-pipa-kernel
            path: out/*.apk
-           retention-days: 7
+           retention-days: 30
 
 
 
