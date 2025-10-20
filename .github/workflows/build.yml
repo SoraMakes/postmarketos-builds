@@ -67,7 +67,7 @@ jobs:
         run: |
            yes | pmbootstrap zap
            rm -r out/*
-           PMB_FDE_PASSWORD=password pmbootstrap install --password 147147 --add postmarketos-ui-plasma-desktop
+           pmbootstrap install --password 147147 --add postmarketos-ui-plasma-desktop
            cat /home/runner/.local/var/pmbootstrap/log.txt
            pmbootstrap export
            cp /tmp/postmarketOS-export/boot.img out/boot-xiaomi-pipa.img
@@ -91,7 +91,7 @@ jobs:
         run: |
            yes | pmbootstrap zap
            rm -r out/*
-           pmbootstrap install --password 147147 --add postmarketos-ui-plasma-desktop --fde
+           PMB_FDE_PASSWORD=password pmbootstrap install --password 147147 --add postmarketos-ui-plasma-desktop --fde
            cat /home/runner/.local/var/pmbootstrap/log.txt
            pmbootstrap export
            cp /tmp/postmarketOS-export/boot.img out/boot-xiaomi-pipa.img
